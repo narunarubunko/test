@@ -1,0 +1,624 @@
+
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>なるなる文庫:narunarubunko</title>
+<meta name="description" content="なるなる文庫の書架です。一部Kindleにて発売の作品を除き、無料開放中です。新作や印刷した作品はイベント参加時に販売しております。">
+<meta name="keywords" content="なるなる文庫,narunarubunko,コミックロケット,なるなる文豪,漫画,マンガ,絵本,絵画,drawing,picturebook,comic,COMITIA,コミティア,文学フリマ">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<link rel="stylesheet" href="/_labo/mordal.css" type="text/css">
+<style>
+body {
+    padding-top: 52px; /* ヘッダーの後ろに要素が隠れないようにするため */
+    background-color: #fdf3e4;
+    color: #463d30;
+}
+
+header {
+    width: 100%; /* 幅いっぱいを指定 */
+    height: 50px; /* 高さを50pxに指定 */
+    background: #c1b199; /* 背景色にブラウングレーを指定 */
+    padding: 20px 50px; /* ヘッダーに上下左右それぞれ余白を指定 */
+    box-sizing: border-box; /* padding分を含んで幅を100%にするため */
+    position: fixed; /* ウィンドウを基準に画面に固定 */
+    top: 0; /* 上下の固定位置を上から0pxにする */
+    left: 0; /* 左右の固定位置を左から0pxにする */
+    display: flex; /* 中の要素を横並びにする */
+    align-items: center; /* 中の要素を上下中央に並べる */
+    z-index: 1000;
+    filter: drop-shadow(0px 1px 2px rgb(100, 100, 100));
+}
+
+header .gnav .menu {
+    display: flex; /* 中の要素を横並びにする */
+}
+
+header .gnav .menu li {
+    list-style: none; /* リストの[・]を消す */
+}
+header .gnav .menu li a {
+  display: inline-block;
+  cursor: pointer;
+    color: #463d30;
+    font-weight:bold;
+    text-decoration:none;
+}
+#bookshelf label {
+  display: none;
+  color: #463d30;
+  font-weight:bold;
+}
+#sort-picturebook:checked ~ ul [data-color*="picturebook"],
+#sort-painting:checked ~ ul [data-color*="painting"],
+#sort-manga:checked ~ ul [data-color*="manga"] {
+  order: -1;
+}
+header .gnav .menu li + li {
+    margin-left: 40px; /* メニューそれぞれに間隔をあけるため */
+}
+
+input[name="sort"] {
+  display: none;
+}
+
+.nav-hidden{
+    display:none;
+}
+.visible-sp {
+	display:none;
+}
+@media only screen and (max-width: 767px){
+	h1,h1 a {
+		display:inline-block;
+		margin:0;
+	}
+	.visible-sp {
+		display:inline-block;
+	}
+	header {
+		display:block;
+	    padding:15px 0 0 50px;
+	}
+	#menubtn {
+		width:50%;
+		text-align:right;
+		font-weight:bold;
+		color: #463d30;
+	}
+	header .gnav .menu {
+	    display: block; /* 中の要素を縦並びにする */
+	}
+	header .gnav .menu li + li {
+	    margin-left: 0; /* メニューを揃える */
+	}
+	header .gnav .menu li {
+		border-bottom: solid 1px #564b39;
+	}
+	/*ハンバーガーメニュー下準備*/
+	#menubtn img{
+	    width:100%;
+	    max-width: 50px;
+	}
+	.w1000{
+	    max-width:1000px;
+	    margin: 0 auto;
+	}
+	nav{
+	    background-color:#928065;
+	    padding:20px 3%;
+	    display: none;/*追加*/
+	}
+	#nav-input:checked ~ nav {/*チェック入ってるとき ~ メニューが*/
+	    display: block;/*追加*/
+	    animation: 1s fadeIn;/*追加*/
+	}
+	@keyframes fadeIn {
+	    from { opacity: 0; }/*追加*/
+	    to { opacity: 1; }/*追加*/
+	  }
+	.nav-hidden{
+	    display:none;
+	}
+	
+	header {
+	    height: auto; /* 高さを自動に */
+	    min-height: 50px; /* 高さを最低でも50pxに */
+	}
+}
+main {
+	text-align:center;
+}
+.neumorphism {
+    background-color: rgb(214 205 190);/*rgb(190, 205, 214);*/
+    padding: 0 50px;
+    margin: 0 0 10px 40px;
+}
+@media only screen and (max-width: 767px){
+	.neumorphism {
+	    padding: 0 50px 0 20px;
+	    margin: 0 0 10px 0px;
+	}
+}
+.neumorphism .box {
+    background-color: rgb(214 205 190);/*rgb(190, 205, 214);*/
+    transition: box-shadow 0.5s;
+    /* box-shadow:
+        10px 10px 30px transparent,
+        -10px -10px 30px transparent,
+        inset 10px 10px 30px rgba(18, 47, 61, 0.5),
+        inset -10px -10px 30px rgba(248, 253, 255, 0.9);
+    */
+    box-shadow:
+        10px 10px 30px transparent,
+        -10px -10px 30px transparent,
+        inset 10px 10px 30px rgba(61, 50, 18, 0.5),
+        inset -10px -10px 30px rgba(255, 253, 248, 0.9);
+    border-radius: 10px;
+}
+.neumorphism .box:hover{
+    /* box-shadow: 10px 10px 30px rgb(18 47 61 / 50%), -10px -10px 30px rgb(248 253 255 / 90%), inset 10px 10px 30px transparent, inset -10px -10px 30px transparent; */
+    box-shadow: 10px 10px 30px rgb(61 50 18 / 50%), -10px -10px 30px rgb(255 253 248 / 90%), inset 10px 10px 30px transparent, inset -10px -10px 30px transparent;
+}
+.box {
+    display: inline-block;
+    width: 90%;
+    height: 170px;
+    background-color: #fff;
+}
+.box::after {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.group > div {
+    position: relative;
+    font-size: 13px;
+    box-sizing: border-box;
+    padding-top: 33px;
+    text-align: center;
+    margin: 30px;
+}
+#bookshelf ul {
+    margin:0 0 10px;
+    display:-webkit-box;
+    display:-moz-box;
+    display:-ms-flexbox;
+    display:-webkit-flex;
+    display:-moz-flex;
+    display:flex;
+    -webkit-box-lines:multiple;
+    -moz-box-lines:multiple;
+    -webkit-flex-wrap:wrap;
+    -moz-flex-wrap:wrap;
+    -ms-flex-wrap:wrap;
+    flex-wrap:wrap;
+    width:100%;
+}
+@media only screen and (max-width: 767px){
+	#bookshelf ul {
+	    padding-inline-start: calc((100% - 227px)/2);
+	}
+}
+#bookshelf ul li {
+        margin:0 10px 10px 0;
+        padding:10px;
+        border:1px solid #c1b199;
+        width:200px;
+        background-color: #e4d8c6;
+        list-style:none;
+        box-shadow: 10px 10px 30px transparent, -10px -10px 30px transparent, inset 10px 10px 30px rgb(61 50 18 / 50%), inset -10px -10px 30px rgb(255 253 248 / 90%);
+}
+
+#bookshelf ul li.drawing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 433px;
+    width: 100%;
+}
+@media only screen and (max-width: 767px){
+	#bookshelf ul li.drawing {
+	    max-width: 222px;
+	}
+}
+#bookshelf ul li.tate {
+    max-width: 200px;
+}
+
+#bookshelf ul li a {
+    text-decoration: none;
+}
+#bookshelf ul li a .bookstand,
+#bookshelf ul li a .booklabel {
+    /* background: grey; */
+    display: flex;
+    align-items: center;
+    /* height: 202px; */
+    justify-content: center;
+    padding: 2px 8px;
+}
+#bookshelf ul li a .bookstand img {
+    filter: drop-shadow(0px 1px 2px rgb(100, 100, 100));
+}
+#bookshelf ul li a .booklabel span {
+    filter: drop-shadow(0px 1px 1px rgb(250, 250, 250));
+    font-weight: bold;
+}
+#bookshelf ul li a .booklabel {
+    height: 50px;
+}
+#bookshelf ul li a img {
+	width:100%;
+}
+#bookshelf ul li a .booktitle {
+    font-size: 90%;
+    display: block;
+    color: #463d30;
+}
+</style>
+
+</head>
+<body>
+<script>
+console.log("リダイレクト");
+let chkurl = location.protocol;
+if(chkurl.indexOf('https')!=-1){
+console.log("safety!:"+chkurl);
+} else {
+console.log("danger!:"+chkurl);
+	window.location.href='https://main-narunarubunko.ssl-lolipop.jp/';
+}
+</script>
+
+	<header>
+	    <h1><a href="/"><img src="/_labo/img/mainlogo.svg" alt="narunarubunko なるなる文庫"></a></h1>
+	    <input id="nav-input" type="checkbox" class="nav-hidden">
+	    <label id="menubtn" for="nav-input" class="visible-sp">本棚:Bookshelf</label>
+	    <nav class="gnav">
+	        <ul class="menu">
+	            <li><a onclick="sortswitch('manga')">マンガ：MANGA</a></li>
+	            <li><a onclick="sortswitch('picturebook')">絵本：PictureBook</a></li>
+	            <li><a onclick="sortswitch('painting')">絵画：Painting</a></li>
+	            <li><a href="https://main-narunarubunko.ssl-lolipop.jp/shop/contact-form">お問い合わせ：Contact</a></li>
+	        </ul>
+	    </nav>
+	</header>
+<script>
+function sortswitch(switchbtn){
+    console.log('Select!:'+switchbtn);
+    let setid ='sort-' + switchbtn;
+    document.getElementById(setid).checked = true;
+
+    let elements = document.getElementsByClassName('slbl');
+    let len = elements.length;
+    for (let i = 0; i < len; i++){
+        elements.item(i).style.display='none';;
+    }
+    const nextSibling = document.getElementById(setid).nextElementSibling;
+    nextSibling.style.display='inline';
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+}
+</script>
+	<main>
+		<div class="group neumorphism">
+			<div class="box">
+				2022年2月の<a href="https://www.comitia.co.jp/" target="_blank" rel="noopener noreferrer">COMITIA</a>
+				<!--と<a href="https://bunfree.net/event/tokyo33/" target="_blank" rel="noopener noreferrer">文学フリマ東京</a> -->
+				に参加予定です。<br />参加時には、製本したものを販売致します。<br />間に合えば新作も発表予定です。<br />寄稿させていただいた<a href="https://twitter.com/nenkanshikaiki" target="_blank" rel="noopener noreferrer">『年刊誌怪奇』と『別冊髑髏』</a>も販売いたします<br />立ち読み大歓迎<br />
+				<!-- img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="コミティア会場マップ" data-imgsrc="img/comitia138_map_narunarubunk.jpg" src="img/comitia_thumb.png" -->
+				<!-- img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="文学フリマ会場マップ" data-imgsrc="img/bunfuri-tokyo20211123_map.jpg" src="img/bunfuri_thumb.png" -->
+			</div>
+		</div>
+	    <div id="bookshelf">
+			<input id="sort-reset" type="radio" name="sort" checked><label for="sort-reset" class="slbl">Reset</label>
+	        <input id="sort-manga" type="radio" name="sort"><label for="sort-manga" class="slbl">マンガ：MANGA</label>
+	        <input id="sort-picturebook" type="radio" name="sort"><label for="sort-picturebook" class="slbl">絵本：PictureBook</label>
+	        <input id="sort-painting" type="radio" name="sort"><label for="sort-painting" class="slbl">絵画：Painting</label>
+	    	<ul>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="公園入口" data-imgsrc="../drawingworks/012.jpg" src="../drawingworks/012_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="beergold" data-imgsrc="../drawingworks/IMG_2135.PNG" src="../drawingworks/IMG_2135_thumb.jpg">
+				</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/cangaloo/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/cangaloo/images/1.jpg" alt="カンガルー奇譚 【驚くべき散歩シリーズ】"></div>
+	    				<div class="booklabel"><span class="booktitle">カンガルー奇譚 </span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/temuren/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/temuren/images/1.jpg" alt="テムレンさんのビークル"></div>
+	    				<div class="booklabel"><span class="booktitle">テムレンさんのビークル</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="料理人" data-imgsrc="../drawingworks/IMG_2120.PNG" src="../drawingworks/IMG_2120_thumb.jpg">
+				</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/jibiki/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/jibiki/images/1.jpg" alt="雪駄と字引"></div>
+	    				<div class="booklabel"><span class="booktitle">雪駄と字引</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/soraniotiru/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/soraniotiru/images/1.jpg" alt="空ニ落チル"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">空ニ落チル</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/huntingworld/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/huntingworld/images/1.jpg" alt="ハンティングワールド"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">ハンティングワールド</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/matatakumanoyume/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/matatakumanoyume/images/1.jpg" alt="瞬夢"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">瞬夢</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="地元ビール" data-imgsrc="../drawingworks/IMG_2133.PNG" src="../drawingworks/IMG_2133_thumb.jpg">
+				</li>
+	    		<!--
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/usonko/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/usonko/images/1.jpg" alt="ウソンコ時計"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">ウソンコ時計</span></div>
+	    			</a>
+	    		</li>
+	    		-->
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="黄金色の流れ" data-imgsrc="../drawingworks/010.jpg" src="../drawingworks/010_thumb.jpg">
+				</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/noufruit/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/noufruit/images/1.jpg" alt="ノウフルーツ"></div>
+	    				<div class="booklabel"><span class="booktitle">ノウフルーツ</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="夏の影" data-imgsrc="../drawingworks/IMG_2137.PNG" src="../drawingworks/IMG_2137_thumb.jpg">
+				</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/straightline/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/straightline/images/1.jpg" alt="STRAIGHT LINE【ジャイアント・エクスプローラー】"></div>
+	    				<div class="booklabel"><span class="booktitle">STRAIGHT LINE</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/giantexplorer/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/giantexplorer/images/1.jpg" alt="GIANT EXPLORER【ジャイアント・エクスプローラー】"></div>
+	    				<div class="booklabel"><span class="booktitle">ジャイアント・エクスプローラー</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="バスを待つ" data-imgsrc="../drawingworks/IMG_2132.PNG" src="../drawingworks/IMG_2132_thumb.jpg">
+				</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/ceilinggirl/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/ceilinggirl/images/1.jpg" alt="シーリングガール【エピソード１：あたらしい生活】"></div>
+	    				<div class="booklabel"><span class="booktitle">シーリングガール</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/ceilinggirl2/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/ceilinggirl2/images/1.jpg" alt="それからの私【シーリングガール：エピソード２】"></div>
+	    				<div class="booklabel"><span class="booktitle">それからの私</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing tate"  data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="ある施設 A facility" data-imgsrc="../drawingworks/005.jpg"" src="../drawingworks/005_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="プラットホーム platform" data-imgsrc="../drawingworks/002.jpg" src="../drawingworks/002_thumb.jpg">
+				</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/kusakari/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/kusakari/images/1.jpg" alt="クサカリ戦記"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">クサカリ戦記</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/reonald/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/reonald/images/1.jpg" alt="レオナルド新地"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">レオナルド新地</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/ohikkosi/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/ohikkosi/images/1.jpg" alt="お引っ越し"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">お引っ越し</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/reversible/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/reversible/images/1.jpg" alt="リバーシブル"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">リバーシブル</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/homeyotataeyo/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/homeyotataeyo/images/1.jpg" alt="ほめよたたえよ"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">ほめよたたえよ</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/koukoudebut/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/koukoudebut/images/1.jpg" alt="高校デビュー"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">高校デビュー</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="manga">
+	    			<a href="../bookshelf/polardrive/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/polardrive/images/1.jpg" alt="ポーラードライブ"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">ポーラードライブ</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="大人の蓋" data-imgsrc="../drawingworks/IMG_2138.PNG" src="../drawingworks/IMG_2138_thumb.jpg">
+				</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="みどりちゃん midori chan" data-imgsrc="../drawingworks/004.jpg" src="../drawingworks/004_thumb.jpg">
+				</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/datukasajizou/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/datukasajizou/images/1.jpg" alt="脱かさじぞう"></div>
+	    				<div class="booklabel"><span class="booktitle">脱かさじぞう</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/daisensei/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/daisensei/images/1.jpg" alt="大先生"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">大先生</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="一杯目" data-imgsrc="../drawingworks/IMG_2134.PNG" src="../drawingworks/IMG_2134_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="夕暮れの校舎" data-imgsrc="../drawingworks/011.jpg" src="../drawingworks/011_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="瓦壁 kawarakabe" data-imgsrc="../drawingworks/001.jpg" src="../drawingworks/001_thumb.jpg">
+				</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/numemi/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/numemi/images/1.jpg" alt="ぬめみ"><br /></div>
+	    				<div class="booklabel"><span class="booktitle">ぬめみ</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="緑髪" data-imgsrc="../drawingworks/greenhairboy.jpg" src="../drawingworks/greenhairboy_thumb.jpg">
+				</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="僕の計画" data-imgsrc="../drawingworks/theplan.jpg" src="../drawingworks/theplan_thumb.jpg">
+				</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/yuokuri/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/yuokuri/images/1.jpg" alt="ゆおくりでもう一度"></div>
+	    				<div class="booklabel"><span class="booktitle">ゆおくりでもう一度</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/natuoniwotaijini/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/natuoniwotaijini/images/1.jpg" alt="夏、鬼を退治に"></div>
+	    				<div class="booklabel"><span class="booktitle">夏、鬼を退治に</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/gyuchan/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/gyuchan/images/1.jpg" alt="ぎゅうちゃん たびにでる"></div>
+	    				<div class="booklabel"><span class="booktitle">ぎゅうちゃん たびにでる</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="映り込み" data-imgsrc="../drawingworks/IMG_2140.PNG" src="../drawingworks/IMG_2140_thumb.jpg">
+				</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="のっぽとしましま" data-imgsrc="../drawingworks/longtallboyredstripeboy.jpg" src="../drawingworks/longtallboyredstripeboy_thumb.jpg">
+				</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="夜の階段" data-imgsrc="../drawingworks/IMG_2136.PNG" src="../drawingworks/IMG_2136_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="ラトビアの列車" data-imgsrc="../drawingworks/008.jpg" src="../drawingworks/008_thumb.jpg">
+				</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/railcake/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/railcake/images/1.jpg" alt="れーるけーき"></div>
+	    				<div class="booklabel"><span class="booktitle">れーるけーき</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/hiiro/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/hiiro/images/1.jpg" alt="緋色の列車"></div>
+	    				<div class="booklabel"><span class="booktitle">緋色の列車</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="青いイノキ" data-imgsrc="../drawingworks/bluetshirts.jpg" src="../drawingworks/bluetshirts_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="黄色いレンガ壁の家 Yellow brick wall house" data-imgsrc="../drawingworks/006.jpg" src="../drawingworks/006_thumb.jpg">
+					<!-- div class="booklabel"><span class="booktitle">黄色いレンガ壁の家 Yellow brick wall house</span></div -->
+				</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="黄色いシャツ" data-imgsrc="../drawingworks/yellowtshirtsboy.jpg" src="../drawingworks/yellowtshirtsboy_thumb.jpg">
+				</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/deliver/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/deliver/images/1.jpg" alt="ぼくはデリヴァー"></div>
+	    				<div class="booklabel"><span class="booktitle">ぼくはデリヴァー</span></div>
+	    			</a>
+	    		</li>
+				<li class="drawing tate" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="tate" data-caption="夕焼けのきもち" data-imgsrc="../drawingworks/boyonsunset.jpg" src="../drawingworks/boyonsunset_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="旧街道" data-imgsrc="../drawingworks/007.jpg" src="../drawingworks/007_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="学校の帰り道" data-imgsrc="../drawingworks/gohomefromschool.jpg" src="../drawingworks/gohomefromschool_thumb.jpg">
+				</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/killershot/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/killershot/images/1.jpg" alt="グランドファイナルキラーショット"></div>
+	    				<div class="booklabel"><span class="booktitle">グランドファイナルキラーショット</span></div>
+	    			</a>
+	    		</li>
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/inuhanekoha/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/inuhanekoha/images/title.jpg" alt="犬派猫派"></div>
+	    				<div class="booklabel"><span class="booktitle">犬派猫派</span></div>
+	    			</a>
+	    		</li>
+	    		<!--
+	    		<li data-color="picturebook">
+	    			<a href="../bookshelf/hadesibu/images/index.html">
+	    				<div class="bookstand"><img src="../bookshelf/hadesibu/images/title.jpg" alt="ハデシブ"></div>
+	    				<div class="booklabel"><span class="booktitle">ハデシブ</span></div>
+	    			</a>
+	    		</li>
+	    		-->
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="野の草" data-imgsrc="../drawingworks/009.jpg" src="../drawingworks/009_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="赤い髪" data-imgsrc="../drawingworks/redhair.jpg" src="../drawingworks/redhair_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="港の塔" data-imgsrc="../drawingworks/tower.jpg" src="../drawingworks/tower_thumb.jpg">
+				</li>
+				<li class="drawing" data-color="painting">
+					<img class="works_modal_open" data-modal-open="modal-1" data-tateyoko="yoko" data-caption="路面電車" data-imgsrc="../drawingworks/redstreetcar.jpg" src="../drawingworks/redstreetcar_thumb.jpg">
+				</li>
+	    	</ul>
+		</div>
+	</main>
+	<div class="works_modal_wrapper" data-modal="modal-1">
+	  <div class="works_modal_mask"></div>
+	    <div class="works_modal_window">
+	      <div class="works_modal_content">
+	        <p><img id="wideopen" src="/_labo/img/mainlogo.svg"></p>
+	        <p id="caption"></p>
+	      </div>
+	      <div class="works_modal_close">✖</div>
+	    </div>
+	</div>
+	<script src="/_labo/mordal.js"></script>
+</body>
+</html>
